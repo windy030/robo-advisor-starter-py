@@ -7,7 +7,6 @@ import requests
 def as_currency(amount):
         return '${:,.2f}'.format(amount)
 
-
 load_dotenv() # loads environment variables set in a ".env" file, including the value of the ALPHAVANTAGE_API_KEY variable
 
 # see: https://www.alphavantage.co/support/#api-key
@@ -43,40 +42,26 @@ while True:
 
 if program_pass == True:
 
-  print(program_pass)
-  print(data)
-
   request_url = ('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+stock_symbol+'&apikey='+api_key)
   response = requests.get(request_url)
   print(type(response.status_code))
-  # print(response.text)
 
   parsed_response = json.loads(response.text)
 
-  print(type(parsed_response))
-
-  symbol = "NFLX" # TODO: capture user input, like... input("Please specify a stock symbol: ")
-
   last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
-
-  # see: https://www.alphavantage.co/documentation/#daily (or a different endpoint, as desired)
-  # TODO: assemble the request url to get daily data for the given stock symbol...
-
-  # TODO: use the "requests" package to issue a "GET" request to the specified url, and store the JSON response in a variable...
-
-  # TODO: further parse the JSON response...
-
-  # TODO: traverse the nested response data structure to find the latest closing price and other values of interest...
-  
   Time_Series = parsed_response["Time Series (Daily)"]
-  
   dates = list(Time_Series.keys())
-  
   latest_day = dates[0]
+  latest_close = parsed_response["Time Series (Daily)"][latest_day]["4. close"]
 
-  latest_closed = parsed_response["Time Series (Daily)"][latest_day]["4. close"]
 
+  high_prices = []
 
+  for date in dates:
+    high_price = Time_Series[date]["2. high"]
+    high_prices.append(float(high_price))
+
+    recent_high = max(high_prices)
 
 
   # INFO OUTPUTS
@@ -85,15 +70,21 @@ if program_pass == True:
   # TODO: write response data to a CSV file
 
   # TODO: further revise the example outputs below to reflect real information
-  print("-----------------")
-  print(f"STOCK SYMBOL: {symbol}")
-  print("RUN AT: 11:52pm on June 5th, 2018")
-  print("-----------------")
-  print(f"LATEST DAY OF AVAILABLE DATA: {last_refreshed}")
-  print(f"LATEST DAILY CLOSING PRICE: {as_currency(float(latest_closed))}")
-  print("RECENT AVERAGE HIGH CLOSING PRICE: $101,000.00")
-  print("RECENT AVERAGE LOW CLOSING PRICE: $99,000.00")
-  print("-----------------")
-  print("RECOMMENDATION: Buy!")
-  print("RECOMMENDATION REASON: Because the latest closing price is within threshold XYZ etc., etc. and this fits within your risk tolerance etc., etc.")
-  print("-----------------")
+  print("-------------------------")
+  print(f"SELECTED SYMBOL: {stock_symbol}")
+  print("-------------------------")
+  print("REQUESTING STOCK MARKET DATA")
+  print("REQUEST AT: 2018-02-20 14:00") # TODO: dynamic datetime
+  print("-------------------------")
+  print(f"LAST REFRESH: {last_refreshed}")
+  print(f"LATEST CLOSE: {as_currency(float(latest_close))}")
+  print(f"RECENT HIGH: {as_currency(float(recent_high))}")
+  # print(f"RECENT LOW: {as_currency(float(recent_low))}")
+  print("-------------------------")
+  print("RECOMMENDATION: BUY!") # TODO
+  print("BECAUSE: TODO") # TODO
+  print("-------------------------")
+  # print(f"WRITING DATA TO CSV: {printable_csv_filepath}")
+  print("-------------------------")
+  print("HAPPY INVESTING!")
+  print("-------------------------")
