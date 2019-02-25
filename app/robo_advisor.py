@@ -52,6 +52,8 @@ if program_pass == True:
 
   symbol = "NFLX" # TODO: capture user input, like... input("Please specify a stock symbol: ")
 
+  last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
+
   # see: https://www.alphavantage.co/documentation/#daily (or a different endpoint, as desired)
   # TODO: assemble the request url to get daily data for the given stock symbol...
 
@@ -73,8 +75,8 @@ if program_pass == True:
   print(f"STOCK SYMBOL: {symbol}")
   print("RUN AT: 11:52pm on June 5th, 2018")
   print("-----------------")
-  print("LATEST DAY OF AVAILABLE DATA: June 4th, 2018")
-  print(f"LATEST DAILY CLOSING PRICE: {latest_price_usd}")
+  print(f"LATEST DAY OF AVAILABLE DATA: {last_refreshed}")
+  print(f"LATEST DAILY CLOSING PRICE: {last_refreshed}")
   print("RECENT AVERAGE HIGH CLOSING PRICE: $101,000.00")
   print("RECENT AVERAGE LOW CLOSING PRICE: $99,000.00")
   print("-----------------")
