@@ -67,9 +67,18 @@ if program_pass == True:
   # TODO: further parse the JSON response...
 
   # TODO: traverse the nested response data structure to find the latest closing price and other values of interest...
-  latest_closed = parsed_response["Time Series (Daily)"]["2019-02-20"]["4. close"]
+  
+  Time_Series = parsed_response["Time Series (Daily)"]
+  
+  dates = list(Time_Series.keys())
+  
+  latest_day = dates[0]
 
-  #
+  latest_closed = parsed_response["Time Series (Daily)"][latest_day]["4. close"]
+
+
+
+
   # INFO OUTPUTS
   #
 
