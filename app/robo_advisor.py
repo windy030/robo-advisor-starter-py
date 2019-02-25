@@ -72,14 +72,23 @@ if program_pass == True:
   # TODO: write response data to a CSV file
 
   csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "price.csv")
+  csv_headers = ["timestamp","open","high","low","close","volume"]
+
 
   with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
-    writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
+    
+    writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
     writer.writeheader() # uses fieldnames set above
-    writer.writerow({"city": "New York", "name": "Yankees"})
-    writer.writerow({"city": "New York", "name": "Mets"})
-    writer.writerow({"city": "Boston", "name": "Red Sox"})
-    writer.writerow({"city": "New Haven", "name": "Ravens"})
+    for date in dates:
+      daily_price = Time_Series[date]
+      writer.writerow({
+        "timestamp": date, 
+        "open": daily_price["1. open"], 
+        "high": daily_price["2. high"],
+        "low" : daily_price["3. low"],
+        "close": daily_price["4. close"],
+        "volume": daily_price["5. volume"]
+        })
   
   print(f"WRITING DATA TO CSV: {csv_file_path}")
 
