@@ -3,6 +3,11 @@ import json
 import os
 import requests
 
+#converting float to USD adapted from https://stackoverflow.com/questions/21208376/converting-float-to-dollars-and-cents
+def as_currency(amount):
+        return '${:,.2f}'.format(amount)
+
+
 load_dotenv() # loads environment variables set in a ".env" file, including the value of the ALPHAVANTAGE_API_KEY variable
 
 # see: https://www.alphavantage.co/support/#api-key
@@ -62,7 +67,7 @@ if program_pass == True:
   # TODO: further parse the JSON response...
 
   # TODO: traverse the nested response data structure to find the latest closing price and other values of interest...
-  latest_price_usd = "$100,000.00"
+  latest_closed = parsed_response["Time Series (Daily)"]["2019-02-20"]["4. close"]
 
   #
   # INFO OUTPUTS
@@ -76,7 +81,7 @@ if program_pass == True:
   print("RUN AT: 11:52pm on June 5th, 2018")
   print("-----------------")
   print(f"LATEST DAY OF AVAILABLE DATA: {last_refreshed}")
-  print(f"LATEST DAILY CLOSING PRICE: {last_refreshed}")
+  print(f"LATEST DAILY CLOSING PRICE: {as_currency(float(latest_closed))}")
   print("RECENT AVERAGE HIGH CLOSING PRICE: $101,000.00")
   print("RECENT AVERAGE LOW CLOSING PRICE: $99,000.00")
   print("-----------------")
