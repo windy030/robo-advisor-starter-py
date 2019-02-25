@@ -84,8 +84,14 @@ if program_pass == True:
         "volume": daily_price["5. volume"]
         })
   
-  print(f"WRITING DATA TO CSV: {csv_file_path}")
+  if recent_high/recent_low > 1.2:
+    decision = "BUY!"
+    explanation = "the stock's latest closing price is less than 20% above its recent low"
+  else:
+    decision = "DON'T BUY!"
+    explanation = "the stock's latest closing price is greater than 20% above its recent low"
 
+  print(f"WRITING DATA TO CSV: {csv_file_path}")
   print("-------------------------")
   print(f"SELECTED SYMBOL: {stock_symbol}")
   print("-------------------------")
@@ -97,8 +103,8 @@ if program_pass == True:
   print(f"RECENT HIGH: {as_currency(float(recent_high))}")
   print(f"RECENT LOW: {as_currency(float(recent_low))}")
   print("-------------------------")
-  print("RECOMMENDATION: BUY!") # TODO
-  print("BECAUSE: TODO") # TODO
+  print("RECOMMENDATION: " + decision) # TODO
+  print("BECAUSE: " + explanation) # TODO
   print("-------------------------")
   print("-------------------------")
   print("HAPPY INVESTING!")
