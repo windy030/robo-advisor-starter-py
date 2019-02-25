@@ -14,18 +14,17 @@ api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
 while True:
   datatype_pass = True
   symbol_length_pass = True
-  symbol_pass = True
   program_pass = True
   stock_symbol = input("Please enter the stock symbol you would like to hear advice for...")
 
   #Input validation
   if not stock_symbol.isalpha():
-    print("INPUT DATA TYPE ERROR! Please only enter three to five characters! Let's try again.")
+    print("INPUT DATA TYPE ERROR! Please only enter one to five characters! Let's try again.")
     datatype_pass = False
   if datatype_pass == True:
     # New York Stock Exchange (NYSE) and American Stock Exchange (AMEX) listed stocks have three characters or less. 
     # Nasdaq-listed securities have four or five characters.
-    if int(len(stock_symbol)) not in range(3,5):
+    if int(len(stock_symbol)) not in range(1,5):
         print("Please ensure the length of the symbol is between three and five. Let's try again.")
         symbol_length_pass = False
     if symbol_length_pass ==True:    
@@ -35,8 +34,10 @@ while True:
             print('The stock you are looking for is not here')
             break
         else:
+            program_pass = True
             break
 
+print(program_pass)
 symbol = "NFLX" # TODO: capture user input, like... input("Please specify a stock symbol: ")
 
 # see: https://www.alphavantage.co/documentation/#daily (or a different endpoint, as desired)
