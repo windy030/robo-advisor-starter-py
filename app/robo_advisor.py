@@ -2,6 +2,8 @@ from dotenv import load_dotenv
 import json
 import os
 import requests
+import datetime as dt
+import csv
 
 #converting float to USD adapted from https://stackoverflow.com/questions/21208376/converting-float-to-dollars-and-cents
 def as_currency(amount):
@@ -56,18 +58,30 @@ if program_pass == True:
 
 
   high_prices = []
+  low_prices = []
 
   for date in dates:
     high_price = Time_Series[date]["2. high"]
     high_prices.append(float(high_price))
+    low_price = Time_Series[date]["3. low"]
+    low_prices.append(float(low_price))
 
     recent_high = max(high_prices)
-
-
-  # INFO OUTPUTS
-  #
+    recent_low = min(low_prices)
 
   # TODO: write response data to a CSV file
+
+  csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "price.csv")
+
+  with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
+    writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
+    writer.writeheader() # uses fieldnames set above
+    writer.writerow({"city": "New York", "name": "Yankees"})
+    writer.writerow({"city": "New York", "name": "Mets"})
+    writer.writerow({"city": "Boston", "name": "Red Sox"})
+    writer.writerow({"city": "New Haven", "name": "Ravens"})
+  
+  print(f"WRITING DATA TO CSV: {csv_file_path}")
 
   # TODO: further revise the example outputs below to reflect real information
   print("-------------------------")
@@ -79,12 +93,12 @@ if program_pass == True:
   print(f"LAST REFRESH: {last_refreshed}")
   print(f"LATEST CLOSE: {as_currency(float(latest_close))}")
   print(f"RECENT HIGH: {as_currency(float(recent_high))}")
-  # print(f"RECENT LOW: {as_currency(float(recent_low))}")
+  print(f"RECENT LOW: {as_currency(float(recent_low))}")
   print("-------------------------")
   print("RECOMMENDATION: BUY!") # TODO
   print("BECAUSE: TODO") # TODO
   print("-------------------------")
-  # print(f"WRITING DATA TO CSV: {printable_csv_filepath}")
+
   print("-------------------------")
   print("HAPPY INVESTING!")
   print("-------------------------")
