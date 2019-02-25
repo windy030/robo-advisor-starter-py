@@ -9,11 +9,9 @@ import csv
 def as_currency(amount):
         return '${:,.2f}'.format(amount)
 
-load_dotenv() # loads environment variables set in a ".env" file, including the value of the ALPHAVANTAGE_API_KEY variable
-
-# see: https://www.alphavantage.co/support/#api-key
+now = dt.datetime.now()
+load_dotenv() 
 api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
-# print("API KEY: " + api_key) # TODO: remove or comment-out this line after you have verified the environment variable is getting read properly
 
 # Modifying my previous data validation to work for this project
 while True:
@@ -56,7 +54,6 @@ if program_pass == True:
   latest_day = dates[0]
   latest_close = parsed_response["Time Series (Daily)"][latest_day]["4. close"]
 
-
   high_prices = []
   low_prices = []
 
@@ -69,16 +66,13 @@ if program_pass == True:
     recent_high = max(high_prices)
     recent_low = min(low_prices)
 
-  # TODO: write response data to a CSV file
-
+  # write response data to a CSV file
   csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "price.csv")
   csv_headers = ["timestamp","open","high","low","close","volume"]
 
-
-  with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
-    
+  with open(csv_file_path, "w") as csv_file: 
     writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
-    writer.writeheader() # uses fieldnames set above
+    writer.writeheader() 
     for date in dates:
       daily_price = Time_Series[date]
       writer.writerow({
@@ -92,12 +86,11 @@ if program_pass == True:
   
   print(f"WRITING DATA TO CSV: {csv_file_path}")
 
-  # TODO: further revise the example outputs below to reflect real information
   print("-------------------------")
   print(f"SELECTED SYMBOL: {stock_symbol}")
   print("-------------------------")
   print("REQUESTING STOCK MARKET DATA")
-  print("REQUEST AT: 2018-02-20 14:00") # TODO: dynamic datetime
+  print("REQUEST AT: " + str(now.strftime("%Y-%m-%d %H:%M:%S"))) # TODO: dynamic datetime
   print("-------------------------")
   print(f"LAST REFRESH: {last_refreshed}")
   print(f"LATEST CLOSE: {as_currency(float(latest_close))}")
@@ -107,7 +100,6 @@ if program_pass == True:
   print("RECOMMENDATION: BUY!") # TODO
   print("BECAUSE: TODO") # TODO
   print("-------------------------")
-
   print("-------------------------")
   print("HAPPY INVESTING!")
   print("-------------------------")
