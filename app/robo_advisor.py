@@ -8,7 +8,6 @@ import os
 import requests
 import datetime as dt
 import csv
-import pandas as pd
 
 def as_currency(amount):
         return '${:,.2f}'.format(amount)
@@ -30,7 +29,7 @@ while True:
   if datatype_pass == True:
     # New York Stock Exchange (NYSE) and American Stock Exchange (AMEX) listed stocks have three characters or less. 
     # Nasdaq-listed securities have four or five characters.
-    if int(len(stock_symbol)) not in range(1,5):
+    if int(len(stock_symbol)) not in range(1,6):
         print("INPUT LENGTH ERROR! Please ensure the length of the symbol is between one and five characters. Let's try again.")
         symbol_length_pass = False
     if symbol_length_pass ==True:    
@@ -93,12 +92,12 @@ if program_pass == True:
   
   # get the average high prices and compare it to the latest closing price
   average_high = np.mean(high_prices)
-  if latest_close >= average_high:
+  if float(latest_close) >= average_high:
     decision = "DON'T BUY!"
-    explanation = "the stock is overvalued: the latest closing price is equal to or higher than the average high price for the past four months."
+    explanation = "the stock is overvalued - the latest closing price is equal to or higher than the average high price for the past four months."
   else:
     decision = "BUY!"
-    explanation = "the stock is undervalued: the latest closing price is lower than the average high price for the past four months."
+    explanation = "the stock is undervalued - the latest closing price is lower than the average high price for the past four months."
 
   print(f"WRITING DATA TO CSV: {csv_file_path}")
   print("-------------------------")
@@ -131,4 +130,5 @@ if program_pass == True:
   ax.yaxis.set_major_formatter(formatter)
   ax.set_ylim([recent_low,recent_high])
   plt.title("Stock Prices Over the Past Four Months")
+  plt.tight_layout()
   plt.show()
