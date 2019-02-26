@@ -10,7 +10,6 @@ import datetime as dt
 import csv
 import pandas as pd
 
-
 def as_currency(amount):
         return '${:,.2f}'.format(amount)
 
@@ -18,7 +17,6 @@ now = dt.datetime.now()
 load_dotenv() 
 api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
 
-# input validation
 while True:
   datatype_pass = True
   symbol_length_pass = True
@@ -27,13 +25,13 @@ while True:
 
   #Input validation
   if not stock_symbol.isalpha():
-    print("INPUT DATA TYPE ERROR! Please only enter one to five characters! Let's try again.")
+    print("INPUT DATA TYPE ERROR! Please only enter characters! Let's try again.")
     datatype_pass = False
   if datatype_pass == True:
     # New York Stock Exchange (NYSE) and American Stock Exchange (AMEX) listed stocks have three characters or less. 
     # Nasdaq-listed securities have four or five characters.
     if int(len(stock_symbol)) not in range(1,5):
-        print("Please ensure the length of the symbol is between one and five. Let's try again.")
+        print("INPUT LENGTH ERROR! Please ensure the length of the symbol is between one and five. Let's try again.")
         symbol_length_pass = False
     if symbol_length_pass ==True:    
         #validation adapted from https://github.com/hiepnguyen034/robo-stock/blob/master/robo_advisor.py
@@ -47,10 +45,9 @@ while True:
 
 if program_pass == True:
 
+  # making a request
   request_url = ('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+stock_symbol+'&apikey='+api_key)
   response = requests.get(request_url)
-  print(type(response.status_code))
-
   parsed_response = json.loads(response.text)
 
   last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
@@ -62,7 +59,6 @@ if program_pass == True:
   high_prices = []
   low_prices = []
   close_prices = []
-
 
   for date in dates:
     high_price = Time_Series[date]["2. high"]
