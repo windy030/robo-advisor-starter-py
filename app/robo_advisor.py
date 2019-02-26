@@ -31,7 +31,7 @@ while True:
     # New York Stock Exchange (NYSE) and American Stock Exchange (AMEX) listed stocks have three characters or less. 
     # Nasdaq-listed securities have four or five characters.
     if int(len(stock_symbol)) not in range(1,5):
-        print("INPUT LENGTH ERROR! Please ensure the length of the symbol is between one and five. Let's try again.")
+        print("INPUT LENGTH ERROR! Please ensure the length of the symbol is between one and five characters. Let's try again.")
         symbol_length_pass = False
     if symbol_length_pass ==True:    
         #validation adapted from https://github.com/hiepnguyen034/robo-stock/blob/master/robo_advisor.py
@@ -45,7 +45,7 @@ while True:
 
 if program_pass == True:
 
-  # making a request
+  # making a request after successful data validation
   request_url = ('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+stock_symbol+'&apikey='+api_key)
   response = requests.get(request_url)
   parsed_response = json.loads(response.text)
@@ -91,12 +91,14 @@ if program_pass == True:
         "volume": daily_price["5. volume"]
         })
   
-  if recent_high/recent_low > 1.2:
-    decision = "BUY!"
-    explanation = "the stock's latest closing price is less than 20% above its recent low"
-  else:
+  # get the average high prices and compare it to the latest closing price
+  average_high = np.mean(high_prices)
+  if latest_close >= average_high:
     decision = "DON'T BUY!"
-    explanation = "the stock's latest closing price is 20% above its recent low"
+    explanation = "the stock is overvalued: the latest closing price is equal to or higher than the average high price for the past four months."
+  else:
+    decision = "BUY!"
+    explanation = "the stock is undervalued: the latest closing price is lower than the average high price for the past four months."
 
   print(f"WRITING DATA TO CSV: {csv_file_path}")
   print("-------------------------")
