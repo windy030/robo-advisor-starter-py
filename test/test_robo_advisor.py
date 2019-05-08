@@ -12,3 +12,5 @@ def test_get_response():
     parsed_response = get_response(stock_symbol)
     # adapated from https://github.com/s2t2/robo-advisor-screencast/pull/1/files
     assert isinstance(parsed_response, dict)
+    assert parsed_response["Meta Data"]["1. Information"] == "Daily Prices (open, high, low, close) and Volumes"
+    assert parsed_response["Meta Data"]["2. Symbol"] == stock_symbol

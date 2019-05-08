@@ -114,6 +114,9 @@ if __name__ == "__main__":
       decision = "BUY!"
       explanation = "the stock is undervalued - the latest closing price is lower than the average high price for the past four months."
 
+
+
+    breakpoint()
     print(f"WRITING DATA TO CSV: {csv_file_path}")
     print(dashline)
     print(f"SELECTED SYMBOL: {stock_symbol}")
