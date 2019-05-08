@@ -9,6 +9,8 @@ import requests
 import datetime as dt
 import csv
 
+dashline = "-------------------------"
+
 def to_usd(amount):
         return '${:,.2f}'.format(amount)
 
@@ -101,9 +103,9 @@ if __name__ == "__main__":
       explanation = "the stock is undervalued - the latest closing price is lower than the average high price for the past four months."
 
     print(f"WRITING DATA TO CSV: {csv_file_path}")
-    print("-------------------------")
+    print(dashline)
     print(f"SELECTED SYMBOL: {stock_symbol}")
-    print("-------------------------")
+    print(dashline)
     print("REQUESTING STOCK MARKET DATA")
     print("REQUEST AT: " + str(now.strftime("%Y-%m-%d %H:%M:%S"))) 
     print("-------------------------")
@@ -111,13 +113,13 @@ if __name__ == "__main__":
     print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
     print(f"RECENT HIGH: {to_usd(float(recent_high))}")
     print(f"RECENT LOW: {to_usd(float(recent_low))}")
-    print("-------------------------")
+    print(dashline)
     print("RECOMMENDATION: " + decision) 
     print("BECAUSE: " + explanation) 
-    print("-------------------------")
-    print("-------------------------")
+    print(dashline)
+    print(dashline)
     print("HAPPY INVESTING!")
-    print("-------------------------")
+    print(dashline)
 
     # Challenge 3: Plotting Prices over Time / data visualization
     dates.reverse()
