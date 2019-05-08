@@ -18,6 +18,13 @@ def compile_URL(stock_symbol):
         url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + str(stock_symbol)
         return url
 
+def get_response(stock_symbol):
+    API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY")
+    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stock_symbol}&apikey={API_KEY}"
+    response = requests.get(request_url)
+    parsed_response = json.loads(response.text)
+    return parsed_response
+
 
 if __name__ == "__main__":
   now = dt.datetime.now()
