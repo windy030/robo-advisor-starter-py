@@ -10,4 +10,5 @@ def test_compile_URL():
 def test_get_response():
     stock_symbol = "AMZN"
     parsed_response = get_response(stock_symbol)
-    assert type(parsed_response) == class 'dict'
+    # adapated from https://github.com/s2t2/robo-advisor-screencast/pull/1/files
+    assert isinstance(parsed_response, dict)
