@@ -40,3 +40,13 @@ Run the recommendation script:
 python app/robo_advisor.py
 ```
 
+## Test
+
+Install pytest package (first time only):
+```sh
+pip install pytest
+```
+Run the test script:
+```sh
+pytest
+```
