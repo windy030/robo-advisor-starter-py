@@ -21,7 +21,7 @@ cd robo-advisor-starter-py
 Use Anaconda to create and activate a new virtual environment, perhaps called "stocks-env". From inside the virtual environment, install package dependencies:
 
 ```sh
-pip install requests python-dotenv
+pip install -r requirements.txt
 ```
 
 ## Setup
@@ -40,4 +40,13 @@ Run the recommendation script:
 python app/robo_advisor.py
 ```
 
-## [License](/LICENSE.md)
+## Test
+
+Install pytest package (first time only):
+```sh
+pip install pytest
+```
+Run the test script:
+```sh
+pytest
+```
