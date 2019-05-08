@@ -9,7 +9,7 @@ import requests
 import datetime as dt
 import csv
 
-def as_currency(amount):
+def to_usd(amount):
         return '${:,.2f}'.format(amount)
 
 now = dt.datetime.now()
@@ -107,9 +107,9 @@ if program_pass == True:
   print("REQUEST AT: " + str(now.strftime("%Y-%m-%d %H:%M:%S"))) 
   print("-------------------------")
   print(f"LAST REFRESH: {last_refreshed}")
-  print(f"LATEST CLOSE: {as_currency(float(latest_close))}")
-  print(f"RECENT HIGH: {as_currency(float(recent_high))}")
-  print(f"RECENT LOW: {as_currency(float(recent_low))}")
+  print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
+  print(f"RECENT HIGH: {to_usd(float(recent_high))}")
+  print(f"RECENT LOW: {to_usd(float(recent_low))}")
   print("-------------------------")
   print("RECOMMENDATION: " + decision) 
   print("BECAUSE: " + explanation) 
