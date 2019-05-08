@@ -14,6 +14,11 @@ dashline = "-------------------------"
 def to_usd(amount):
         return '${:,.2f}'.format(amount)
 
+def compile_URL(stock_symbol):
+        url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + str(stock_symbol)
+        return url
+
+
 if __name__ == "__main__":
   now = dt.datetime.now()
   load_dotenv() 
