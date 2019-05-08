@@ -25,7 +25,6 @@ def get_response(stock_symbol):
     parsed_response = json.loads(response.text)
     return parsed_response
 
-
 if __name__ == "__main__":
   now = dt.datetime.now()
   load_dotenv() 
@@ -52,6 +51,7 @@ if __name__ == "__main__":
           data=requests.get('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+stock_symbol+'&apikey='+api_key)
           if 'Error' in data.text:
               print("Sorry.The stock symbol is either incorrect or cannot be found online. The program will terminate now...")
+              program_pass = False
               break
           else:
               program_pass = True
@@ -59,10 +59,7 @@ if __name__ == "__main__":
 
   if program_pass == True:
 
-    # making a request after successful data validation
-    request_url = ('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+stock_symbol+'&apikey='+api_key)
-    response = requests.get(request_url)
-    parsed_response = json.loads(response.text)
+    parsed_response = get_response(stock_symbol)
 
     last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
     Time_Series = parsed_response["Time Series (Daily)"]
@@ -114,9 +111,6 @@ if __name__ == "__main__":
       decision = "BUY!"
       explanation = "the stock is undervalued - the latest closing price is lower than the average high price for the past four months."
 
-
-
-    breakpoint()
     print(f"WRITING DATA TO CSV: {csv_file_path}")
     print(dashline)
     print(f"SELECTED SYMBOL: {stock_symbol}")
