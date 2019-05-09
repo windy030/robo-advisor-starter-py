@@ -18,6 +18,7 @@ def compile_URL(stock_symbol):
         url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + str(stock_symbol)
         return url
 
+# adapated from https://github.com/s2t2/robo-advisor-screencast/pull/1/files
 def get_response(stock_symbol):
     API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY")
     request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stock_symbol}&apikey={API_KEY}"
@@ -48,7 +49,7 @@ if __name__ == "__main__":
           symbol_length_pass = False
       if symbol_length_pass ==True:    
           #validation adapted from https://github.com/hiepnguyen034/robo-stock/blob/master/robo_advisor.py
-          data=requests.get('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+stock_symbol+'&apikey='+api_key)
+          data=requests.get(compile_URL(stock_symbol)+'&apikey='+api_key)
           if 'Error' in data.text:
               print("Sorry.The stock symbol is either incorrect or cannot be found online. The program will terminate now...")
               program_pass = False
@@ -117,7 +118,7 @@ if __name__ == "__main__":
     print(dashline)
     print("REQUESTING STOCK MARKET DATA")
     print("REQUEST AT: " + str(now.strftime("%Y-%m-%d %H:%M:%S"))) 
-    print("-------------------------")
+    print(dashline)
     print(f"LAST REFRESH: {last_refreshed}")
     print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
     print(f"RECENT HIGH: {to_usd(float(recent_high))}")
